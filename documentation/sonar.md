@@ -7,8 +7,9 @@ docker compose -f src/main/docker/sonar.yml up -d
 ```
 
 After that you can launch the analysis of your project with
+
 ```bash
-./mvnw clean verify sonar:sonar
+./gradlew clean build sonar --info
 ```
 
 You can see the result at [http://localhost:9001/](http://localhost:9001/)

@@ -7,12 +7,18 @@ bundles = {}
 	spring-boot = "3.2.2"
 	mockito = "5.10.0"
 	junit-jupiter = "5.10.1"
+  org-sonarqube = "4.4.1.3373"
 [plugins]
 	[plugins.spring-boot]
 		id = "org.springframework.boot"
 
 		[plugins.spring-boot.version]
 			ref = "spring-boot"
+  [plugins.org-sonarqube]
+    id = "org.sonarqube"
+
+    [plugins.org-sonarqube.version]
+      ref = "org-sonarqube"
 [libraries]
 	[libraries.spring-boot-starter]
 		name = "spring-boot-starter"
