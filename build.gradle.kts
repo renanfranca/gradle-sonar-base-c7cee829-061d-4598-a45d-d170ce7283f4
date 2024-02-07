@@ -1,6 +1,7 @@
 plugins {
   java
   jacoco
+  alias(libs.plugins.spring.boot)
   // jhipster-needle-gradle-plugins
 }
 
@@ -12,6 +13,13 @@ java {
 
 jacoco {
   toolVersion = libs.versions.jacoco.get()
+}
+
+
+defaultTasks "bootRun"
+
+springBoot {
+  mainClass = "com.mycompany.myapp.JhipsterSampleApplicationApp"
 }
 
 // jhipster-needle-gradle-plugins-configurations
@@ -29,11 +37,13 @@ ext {
 }
 
 dependencies {
+  implementation(platform(libs.spring.boot.dependencies))
+  implementation(libs.spring.boot.starter)
+  implementation(libs.spring.boot.configuration.processor)
+  implementation(libs.commons.lang3)
   // jhipster-needle-gradle-dependencies
-  testImplementation(libs.junit.engine)
-  testImplementation(libs.junit.params)
-  testImplementation(libs.assertj)
-  testImplementation(libs.mockito)
+  testImplementation(libs.spring.boot.starter.test)
+
   // jhipster-needle-gradle-test-dependencies
 }
 

@@ -49,5 +49,17 @@
       "endOfLine" : "lf",
       "indentSize" : 2
     }
+  }, {
+    "module" : "spring-boot",
+    "date" : "2024-02-07T13:48:37.548469682Z",
+    "properties" : {
+      "packageName" : "com.mycompany.myapp",
+      "projectName" : "JHipster Sample Application",
+      "indentSize" : 2,
+      "baseName" : "jhipsterSampleApplication",
+      "endOfLine" : "lf",
+      "serverPort" : 8080,
+      "configurationFormat" : "yaml"
+    }
   } ]
 }
