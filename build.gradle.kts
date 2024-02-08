@@ -2,6 +2,7 @@ plugins {
   java
   jacoco
   alias(libs.plugins.spring.boot)
+  alias(libs.plugins.org.sonarqube)
   // jhipster-needle-gradle-plugins
 }
 
@@ -15,6 +16,21 @@ jacoco {
   toolVersion = libs.versions.jacoco.get()
 }
 
+val sonarProperties = mutableMapOf<String, List<String>>()
+File("sonar-project.properties").forEachLine { line ->
+    if (!line.startsWith("#") && line.contains("=")) {
+        val (key, value) = line.split("=", limit = 2)
+        sonarProperties[key] = value.split(",").map { it.trim() }
+    }
+}
+
+sonarqube {
+    properties {
+      sonarProperties.forEach { (key, value) ->
+        property(key, value)
+      }
+    }
+}
 
 defaultTasks "bootRun"
 
@@ -50,12 +66,21 @@ dependencies {
   // jhipster-needle-gradle-test-dependencies
 }
 
+tasks.jacocoTestReport {
+  dependsOn("test", "integrationTest")
+  reports {
+    xml.required.set(true)
+    html.required.set(false)
+  }
+}
+
 tasks.test {
   filter {
     includeTestsMatching("*Test.*")
     excludeTestsMatching("*IT.*")
   }
   useJUnitPlatform()
+  finalizedBy("jacocoTestReport")
 }
 
 val integrationTest = task<Test>("integrationTest") {
