@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
   java
   jacoco
@@ -16,20 +18,18 @@ jacoco {
   toolVersion = libs.versions.jacoco.get()
 }
 
-val sonarProperties = mutableMapOf<String, List<String>>()
-File("sonar-project.properties").forEachLine { line ->
-    if (!line.startsWith("#") && line.contains("=")) {
-        val (key, value) = line.split("=", limit = 2)
-        sonarProperties[key] = value.split(",").map { it.trim() }
-    }
+val sonarProperties = Properties()
+File("sonar-project.properties").inputStream().use { inputStream ->
+    sonarProperties.load(inputStream)
 }
 
 sonarqube {
-    properties {
-      sonarProperties.forEach { (key, value) ->
-        property(key, value)
-      }
+  properties {
+    sonarProperties.forEach { (key, value) ->
+      val valueList = (value as String).split(",").map { it.trim() }
+      property(key as String, valueList)
     }
+  }
 }
 
 defaultTasks "bootRun"
